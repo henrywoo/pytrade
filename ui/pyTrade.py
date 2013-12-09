@@ -225,7 +225,8 @@ class Data:
   def googDownload(self, symbol):
     today = datetime.datetime.today()
     todayString = today.strftime("%b") + "+" + str(today.day) + "%2C+" + str(today.year)
-    url = "http://www.google.com/finance/historical?q="+symbol+"&startdate=Dec+30%2C+2000&enddate="+todayString+"&num=30&output=csv"
+    url = "http://www.google.com/finance/historical?q="+symbol+"&startdate=Dec+30%2C+2010&enddate="+todayString+"&num=30&output=csv"
+    url="http://ichart.finance.yahoo.com/table.csv?s="+symbol+".HK&d=11&e=9&f=2013&g=d&a=2&b=22&c=2005&ignore=.csv"
     print(url)
     tmp = urlopen(url).read()
     dat = str( tmp, encoding='utf8' )
@@ -498,9 +499,9 @@ class Main(QtGui.QWidget):
     self.indicators = []
 
     ## Create a new GraphicsScene and set GraphicsView (chart) to scene
-    chartViews.append(ChartView("nok"))
+    chartViews.append(ChartView("0992"))
     self.chartView = chartViews[0]
-    self.ui.chartTabs.addTab(self.chartView, "nok")
+    self.ui.chartTabs.addTab(self.chartView, "0992")
 
     ## Connect buttons
     self.connect(self.ui.chartLength, QtCore.SIGNAL("valueChanged(int)"), self.onZoomChart)
@@ -544,7 +545,8 @@ class Main(QtGui.QWidget):
       self.chartView.drawChart()
       self.updateIndicators()
       for ii in self.indicators:
-        apply(ii[0], ii[1:])
+        ii[0](ii[1:])
+        #apply(ii[0], ii[1:])
 
   #############################################################################
   ##  Mulit-Chart View and Symbol Loading
@@ -682,11 +684,14 @@ class Main(QtGui.QWidget):
 
   def updateIndicators(self):
     for ii in self.indicators:
-      apply(ii[0], ii[1:])
-
+      ii[0](ii[1:])
+      #apply(ii[0], ii[1:])
 
   def drawSMA(self, line):
-    self.chartView.drawLine(self.chartView.data.sma(line.value(), time.currentDay, self.chartView.chartLength), line.color())
+    try:
+      self.chartView.drawLine(self.chartView.data.sma(line[0].value(), time.currentDay, self.chartView.chartLength), line[0].color())
+    except:
+      self.chartView.drawLine(self.chartView.data.sma(10, time.currentDay, self.chartView.chartLength), line.color())
   
   def drawWMA(self, line):
     self.chartView.drawLine(self.chartView.data.wma(line.value(), time.currentDay, self.chartView.chartLength), line.color())
@@ -771,7 +776,7 @@ class IndicatorWidget(QtGui.QWidget):
     QtGui.QWidget.__init__(self)
     self.layout = QtGui.QVBoxLayout(self)
     
-    #self.line = Line(main, "Period:", "spinbox")
+    #self.line = Line(main, "Period:", "spinbox") ####simon
     
     for line in self.lines:
       self.layout.addWidget(line)
