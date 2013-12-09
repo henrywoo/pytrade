@@ -1,0 +1,51 @@
+###############################################################################
+## pyTrade
+###############################################################################
+
+pyTrade is a stock charting program and portfolio management tool.
+
+pyTrade provides a "Paper Trading Mode" to allow you to learn how to trade or 
+test new strategies.  The paper trading mode sends you back in time and lets 
+you buy or sell stocks.
+
+pyTrade is currently pre-alpha software so expect bugs and changes.
+
+
+
+
+
+###############################################################################
+## Install
+###############################################################################
+
+pyTrade requires PyQt4 and numpy.
+
+Once the dependencies are installed, simply double click on pyTrade.py to get
+started.
+
+
+
+
+
+###############################################################################
+## Documentation
+###############################################################################
+
+There is very little documentation on pyTrade at the moment.  
+
+
+
+
+
+###############################################################################
+## Files Included with pyTrade
+###############################################################################
+
+** pyTrade.py
+The main program file.  Double click on this to launch the program.
+
+** ui_chart.py
+Auto-generated user interface file
+
+** chartWidget.ui
+QtDesigner ui file
